@@ -6,3 +6,8 @@ spring:
           github:
             clientId:
             clientSecret:
+  datasource:
+    url: jdbc:ignite:thin://localhost:10800
+    driver-class-name: org.apache.ignite.IgniteJdbcThinDriver
+  session:
+    store-type: jdbc
