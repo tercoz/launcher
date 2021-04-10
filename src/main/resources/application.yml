@@ -3,9 +3,23 @@ spring:
     oauth2:
       client:
         registration:
-          google:
-            clientId:
-            clientSecret:
+          keycloak:
+            client-id: newClient
+            client-secret: newClientSecret
+            scope: openid
+            redirect-uri: http://localhost:8080/login/oauth2/code/keycloak
+            client-name: keycloak
+            provider: keycloak
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8083/auth/realms/test/protocol/openid-connect/auth
+            token-uri: http://localhost:8083/auth/realms/test/protocol/openid-connect/token
+            user-info-uri: http://localhost:8083/auth/realms/test/protocol/openid-connect/userinfo?schema=openid
+            user-name-attribute: name
+            user-info-authentication-method: header
+            jwk-set-uri: http://localhost:8083/auth/realms/test/protocol/openid-connect/certs
   datasource:
     url: jdbc:ignite:thin://localhost:10800
     driver-class-name: org.apache.ignite.IgniteJdbcThinDriver
