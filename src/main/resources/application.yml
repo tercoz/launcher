@@ -20,8 +20,11 @@ spring:
             user-name-attribute: name
             user-info-authentication-method: header
             jwk-set-uri: http://localhost:8083/auth/realms/test/protocol/openid-connect/certs
-  datasource:
-    url: jdbc:ignite:thin://localhost:10800
-    driver-class-name: org.apache.ignite.IgniteJdbcThinDriver
   session:
-    store-type: jdbc
+    ignite:
+      defaultMaxInactiveInterval: 180
+      cacheName: spring.session.cache
+ignite-client:
+  addresses: 127.0.0.1:10800 # this is mandatory property!
+  timeout: 10000
+  tcpNoDelay: false

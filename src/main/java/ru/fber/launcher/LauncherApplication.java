@@ -2,20 +2,24 @@ package ru.fber.launcher;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import ru.fber.launcher.session.ignite.EnableIgniteHttpSession;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @RestController
+@EnableIgniteHttpSession
 public class LauncherApplication {
 
     @RequestMapping("/")
-    public ModelAndView root(HttpSession session) {
+    public void root(HttpServletResponse response, HttpSession session) throws IOException {
         session.setAttribute("slavs", "here");
-        return new ModelAndView("redirect:http://localhost:9080");
+        response.sendRedirect("http://localhost:9080");
     }
 
     public static void main(String[] args) {
